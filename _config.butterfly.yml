@@ -14,7 +14,7 @@ menu:
   About: /about/ || fas fa-heart
 
 nav:
-  logo: /img/avatar2.png # image
+  logo: /image/avatar2.png # image
   display_title: true
   fixed: false # fixed navigation bar
 
@@ -89,11 +89,11 @@ katex:
 # --------------------------------------
 
 # Favicon（網站圖標）
-favicon: /img/favicon.png
+favicon: /image/avatar2.png
 
 # Avatar (頭像)
 avatar:
-  img: /img/avatar.png
+  img: /image/avatar.png
   effect: false
 
 # Disable all banner image
@@ -103,7 +103,7 @@ disable_top_img: false
 index_img:
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: /img/back.jpeg
+default_top_img: /image/back.jpeg
 
 # The banner image of archive page
 archive_img:
