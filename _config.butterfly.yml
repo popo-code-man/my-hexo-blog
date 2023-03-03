@@ -41,7 +41,7 @@ copy:
 #   icon: link || the description
 social:
   fab fa-github: https://github.com/popo-code-man || Github
-  fas fa-envelope: mr_wangleilei@163.com
+  fas fa-envelope: https://mr_wangleilei@163.com
 # search (搜索)
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
 # --------------------------------------
