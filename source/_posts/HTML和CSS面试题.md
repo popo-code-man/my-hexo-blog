@@ -1,7 +1,9 @@
 ---
 title: HTML和CSS面试题
 date: 2023-03-10 22:22:28
-tags: React
+tags: 
+  - HTML 
+  - CSS 
 categories: 面试题
 cover: csslogo.png
 top_img: csslogo.png
