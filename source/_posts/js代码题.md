@@ -106,6 +106,33 @@ arr = [...new Set(arr)];
 console.log(arr);
 ```
 
+5. 利用 Map()
+
+> Map 对象是 JavaScript 提供的一种数据结构，结构为键值对形式，将数组元素作为 map 的键存入，然后结合 has()和 set()方法判断键是否重复。
+> Map 对象：用于保存键值对，并且能够记住键的原始插入顺序。任何值（对象或者原始值）都可以作为一个键或一个值。
+
+```javascript
+function removeDuplicate(arr) {
+	const map = new Map();
+	const newArr = [];
+
+	arr.forEach((item) => {
+		if (!map.has(item)) {
+			// has()用于判断map是否包为item的属性值
+			map.set(item, true); // 使用set()将item设置到map中，并设置其属性值为true
+			newArr.push(item);
+		}
+	});
+
+	return newArr;
+}
+
+const result = removeDuplicate(arr);
+console.log(result); // [ 1, 2, 'abc', true, false, undefined, NaN ]
+```
+
+**注意：**使用 Map()也可对 NaN 去重，原因是 Map 进行判断时认为 NaN 是与 NaN 相等的，剩下所有其它的值是根据 `===` 运算符的结果判断是否相等。
+
 ### 冒泡排序
 
 > 冒泡排序是一种简单的排序算法。它重复走访过要排列的数列，**一次比较两个元素，如果他们的顺序错误，就把它们交换过来。** 走访数列的工作重复进行，直到排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。
