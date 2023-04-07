@@ -19,62 +19,78 @@ top_img: react-logo.png
 
 ## 实现过程
 
-`useContext`用于获取全局状态，而`useReducer`用于管理全局状态的变化。具体实现如下：
 
-1. 创建一个`context`对象，该对象将充当全局状态的容器。可以使用`React.createContext`函数创建一个新的`context`对象：
+```typeScript
+import React, { createContext, useContext, useReducer } from 'react';
 
-```javascript
-const AppContext = React.createContext();
-```
-
-2. 在 App 组件中，将全局状态存储在`context`对象中。可以使用`useReducer`钩子来创建状态和更新函数
-
-```javascript
-function reducer(state, action) {
-	switch (action.type) {
-		case "increment":
-			return { counter: state.counter + 1 };
-		case "decrement":
-			return { counter: state.counter - 1 };
-		default:
-			throw new Error();
-	}
+// 创建一个全局的Context
+interface IState {
+  count: number;
 }
 
-function App() {
-	const [state, dispatch] = useReducer(reducer, { counter: 0 });
+type ActionType = { type: 'INCREMENT' } | { type: 'DECREMENT' };
 
-	return (
-		<AppContext.Provider value={{ state, dispatch }}>
-			<div>
-				<h1>Counter: {state.counter}</h1>
-				<button onClick={() => dispatch({ type: "increment" })}>
-					Increment
-				</button>
-				<button onClick={() => dispatch({ type: "decrement" })}>
-					Decrement
-				</button>
-			</div>
-		</AppContext.Provider>
-	);
+interface IContextProps {
+  state: IState;
+  dispatch: React.Dispatch<ActionType>;
 }
+
+const MyContext = createContext({} as IContextProps);
+
+// 创建一个reducer函数
+const reducer = (state: IState, action: ActionType) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+};
+
+// 创建一个Provider组件，用于提供全局的状态和操作函数
+const MyProvider: React.FC = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <MyContext.Provider value={{ state, dispatch }}>
+      {children}
+    </MyContext.Provider>
+  );
+};
+
+// 创建一个自定义Hook，用于在组件中访问全局的状态和操作函数
+const useMyContext = () => {
+  const { state, dispatch } = useContext(MyContext);
+  return [state, dispatch] as const;
+};
+
+// 在组件中使用自定义Hook
+const Counter: React.FC = () => {
+  const [state, dispatch] = useMyContext();
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+    </div>
+  );
+};
+
+// 使用MyProvider组件包裹App组件，使得全局的状态可以在组件中访问
+const App: React.FC = () => {
+  return (
+    <MyProvider>
+      <Counter />
+    </MyProvider>
+  );
+};
+
 ```
 
-3. 在需要访问全局状态的组件中，使用 useContext 来获取 context 对象并获取全局状态：
 
-```javascript
-function Counter() {
-	const { state, dispatch } = useContext(AppContext);
-
-	return (
-		<div>
-			<h1>Counter: {state.counter}</h1>
-			<button onClick={() => dispatch({ type: "increment" })}>Increment</button>
-			<button onClick={() => dispatch({ type: "decrement" })}>Decrement</button>
-		</div>
-	);
-}
-```
 
 
 通过这种方式，可以将全局状态传递给任意数量的子组件，并且在需要访问全局状态的组件中可以轻松获取并更新该状态。此方法可以在一些小型项目中使用，并提供了一种基于useContext和useReducer的简单Redux实现。
