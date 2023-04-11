@@ -1,6 +1,6 @@
 ---
 title: js代码题
-date: 2023-03-01 22:58:49
+date: 2022-07-01 22:58:49
 tags: js
 categories: 面试题
 cover: js图片.jpg
